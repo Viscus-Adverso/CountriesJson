@@ -1,5 +1,8 @@
 package com.TheIronYard;
 
+import jodd.json.JoddJson;
+import jodd.json.JsonSerializer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -28,6 +31,7 @@ public class Main {
         }
 
 
+
         HashMap<String, ArrayList<Country>> countryMap = new HashMap<>();
 
         for (Country country : allCountries) {
@@ -53,6 +57,20 @@ public class Main {
         clw.write(String.valueOf(countriesForOneLetter));
         clw.close();
 
+        ToJSON(countriesForOneLetter,letter);
+
+    }
+
+
+
+    public static void ToJSON(ArrayList<Country> countriesForOneLtter, String letter) throws IOException {
+        CountryWrapper cw = new CountryWrapper(countriesForOneLtter);
+        JsonSerializer countrySerializer = new JsonSerializer();
+        String jsonCountry = countrySerializer.deep(true).serialize(cw);
+        File jcl = new File(letter + "_countries.json");
+        FileWriter jcw = new FileWriter(jcl);
+        jcw.write(jsonCountry);
+        jcw.close();
 
 
     }
