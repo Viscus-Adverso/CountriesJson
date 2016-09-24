@@ -2,6 +2,8 @@ package com.TheIronYard;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -9,7 +11,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 
         ArrayList<Country> allCountries = new ArrayList<>();
 
@@ -38,6 +40,20 @@ public class Main {
             countryMap.put(firstLetter, co);
 
         }
-        System.out.println(countryMap);
+
+
+
+        System.out.println("Please type the first letter of the countries you want listed.");
+        Scanner inputScanner = new Scanner(System.in);
+        String letter = inputScanner.nextLine();
+         ArrayList<Country> countriesForOneLetter = countryMap.get(letter);
+
+        File cl = new File(letter +"_countries.txt");
+        FileWriter clw = new FileWriter(cl);
+        clw.write(String.valueOf(countriesForOneLetter));
+        clw.close();
+
+
+
     }
 }
